@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Safety Check</title>
+<meta name="description" content="A free skill that checks AI skills, agents, MCP setups and prompts for prompt-injection risk.">
+<style>
+  :root{--bg:#0a0c11;--panel:#121620;--panel2:#181d2a;--fg:#e9ebf2;--muted:#9aa1b5;--line:rgba(255,255,255,.1);
+    --danger:#ff5d5d;--safe:#2fd6a3;--blue:#8aa2ff;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 var(--sans);
+    background-image:radial-gradient(1000px 600px at 85% -10%,rgba(47,214,163,.08),transparent 60%)}
+  .wrap{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+  .over{font:700 12px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--safe);margin:18px 0 8px}
+  h1{font-size:clamp(30px,7vw,46px);line-height:1.05;margin:0 0 12px;letter-spacing:-.02em}
+  .lede{color:var(--muted);font-size:clamp(17px,2.6vw,20px);margin:0 0 22px}
+  .dl{display:inline-flex;gap:10px;align-items:center;background:var(--safe);color:#04130e;font-weight:800;
+    padding:14px 20px;border-radius:999px;text-decoration:none;font-size:17px}
+  .dl small{font-weight:600;opacity:.75}
+  .alt{margin-left:14px;color:var(--muted);font-size:15px}
+  .alt a{color:var(--blue)}
+  h2{font:700 13px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+    margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}
+  .card h3{margin:0 0 6px;font-size:17px}
+  .card p{margin:0;color:var(--muted);font-size:15.5px}
+  code,pre{font-family:var(--mono)}
+  pre{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;
+    font-size:13.5px;color:#cfe0ff;margin:10px 0 0;white-space:pre-wrap;word-break:break-word}
+  .legs{display:grid;grid-template-columns:1fr;gap:10px}
+  @media(min-width:640px){.legs{grid-template-columns:repeat(3,1fr)}}
+  .leg{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--danger);border-radius:12px;padding:14px}
+  .leg b{display:block;margin-bottom:4px}
+  .leg span{color:var(--muted);font-size:14.5px}
+  .note{color:var(--muted);font-size:14.5px;margin-top:28px}
+  a{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="over">Hacked by Your Own AI · free skill</p>
+  <h1>Agent Safety Check</h1>
+  <p class="lede">Checks any AI skill, agent, custom GPT or Gem, MCP setup or system prompt for prompt-injection risk, and tells you exactly what to change. Use it before you install someone else’s skill, or while you build your own.</p>
+  <a class="dl" href="agent-safety-check.zip" download>⬇ Download the skill <small>.zip · 2 files</small></a>
+  <span class="alt">or read <a href="SKILL.md">SKILL.md</a> · <a href="scan.py">scan.py</a></span>
+
+  <h2>What it looks for</h2>
+  <div class="legs">
+    <div class="leg"><b>1 · Private data</b><span>What can it read that you wouldn’t publish?</span></div>
+    <div class="leg"><b>2 · Untrusted content</b><span>What text reaches it that someone else wrote?</span></div>
+    <div class="leg"><b>3 · A way out</b><span>How could data leave, or harm be done?</span></div>
+  </div>
+  <div class="card"><p>All three together = high risk. It also finds <b style="color:var(--fg)">instructions hidden in the skill itself</b> (comments, invisible characters, encoded text), <b style="color:var(--fg)">actions that run without your approval</b>, and <b style="color:var(--fg)">scripts that reach the network or your secrets</b>. You get a verdict, the findings and the top three fixes.</p></div>
+
+  <h2>Install</h2>
+  <div class="card"><h3>Claude Code</h3>
+    <p>Unzip into your skills folder, then ask: “Check the skill in ./some-skill for prompt-injection risk.”</p>
+    <pre>unzip agent-safety-check.zip -d ~/.claude/skills/</pre></div>
+  <div class="card"><h3>Claude app (claude.ai, desktop)</h3>
+    <p>Settings → Capabilities → Skills → upload the .zip. Then attach or paste the skill / prompt you want checked.</p></div>
+  <div class="card"><h3>ChatGPT or Gemini</h3>
+    <p>Open <a href="SKILL.md">SKILL.md</a>, copy it into a new chat (or a custom GPT / Gem’s instructions), then paste or upload the skill, prompt or config to check.</p></div>
+  <div class="card"><h3>Just the scanner</h3>
+    <p>Python 3, no dependencies. Read-only: it never runs the files it scans.</p>
+    <pre>python3 scan.py path/to/skill-folder</pre></div>
+
+  <p class="note">A review aid, not a guarantee. The fix is never “add <i>ignore injections</i> to the prompt” — it’s removing or gating one of the three legs. From the NomadCruise talk “Hacked by Your Own AI”, Nov 8 2026 · <a href="../">Tonight on Deck 7</a></p>
+</div>
+</body>
+</html>
